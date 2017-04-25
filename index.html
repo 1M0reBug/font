@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>font</title>
+    <style>
+    body {
+        margin: 0;
+        padding: 6vh 0 0 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+        box-sizing: border-box;
+        background-color: #ddd;
+        color: rgba(0, 0, 0, .825);
+        font-family: 'DejaVu Sans Mono', monospace;
+        text-transform: uppercase;
+        font-size: 15.7vh;
+        line-height: 0;
+    }
+
+    @media screen and (orientation:landscape) {
+        body {
+            font-size: 19vh;
+            padding-top: 2vh;
+        }
+    }
+    </style>
+</head>
+<body>
+    <p id="date"></p>
+    <p id="month"></p>
+    <p id="year"></p>
+    <p id="time"></p>
+
+    <script>
+        (function() {
+            const run = () => {
+                const format = (nb) => nb < 10 ? '0' + nb : nb;
+                const months = [
+                    'Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'June',
+                    'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.',
+                ];
+                const month = document.getElementById('month');
+                const date  = document.getElementById('date');
+                const year  = document.getElementById('year');
+                const time  = document.getElementById('time');
+
+                const currentTime = new Date();
+                month.innerText = months[ currentTime.getMonth() ];
+                date.innerText  = format( currentTime.getDate() );
+                year.innerText  = currentTime.getFullYear();
+                time.innerText  = format( currentTime.getHours() ) + ':'
+                                + format( currentTime.getMinutes() );
+                
+                const nextTime = new Date(currentTime);
+                nextTime.setMinutes( currentTime.getMinutes() + 1, 0, 0 );
+                setTimeout(run, nextTime - currentTime);
+            }
+
+            run();
+        })();
+    </script>
+</body>
+</html>
